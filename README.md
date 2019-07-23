@@ -1,5 +1,7 @@
 # DFRobot_PAJ7620
 The PAJ7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or departing object from the sensor. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete sensor solution<br>
+* 基于PAJ7620U2的手势识别模块识别速度快，精度高，识别距离远（芯片手册上标注0-15cm，我们实测可以到达20cm）
+* 我们扩展出了一种慢速识别模式，识别周期为2秒，除了原生支持的9个手势外，我们开扩展了左右慢速挥手  上下慢速挥手 前后慢速挥手 乱序慢速挥手4中模式，特别是个初级用户使用
 
 这里需要显示拍照图片，可以一张图片，可以多张图片（不要用SVG图）
 
@@ -83,11 +85,11 @@ To use this library, first download the library file, paste it into the \Arduino
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-Arduino uno        |      √       |              |             | 
+Arduino Uno        |      √       |              |             | 
 Mega2560        |      √       |              |             | 
 Leonardo        |      √       |              |             | 
 mPython/ESP32   |      √       |              |             | 
-Microbit        |      √       |              |             | 
+micro:bit        |      √       |              |             | 
 
 ## History
 
