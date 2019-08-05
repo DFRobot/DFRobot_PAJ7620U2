@@ -25,7 +25,7 @@ The PAJ7620 integrates gesture recognition function with general I2C interface i
 In this Arduino library, we will show you the basic usage of the PAJ7620 gesture sensor. You can experience the functions below using the built-in examples: 
   1. Read the 9 gestures' function in fast mode. 
   2. Read the function of the 9 basic gestures and 4 expanded gestures in slow mode.
-  3. An example of gesture sequence recognition in fast mode, we call it gesture code.
+  3. An example of gesture sequence recognition in fast mode, we call it gesture password.
 
 ## Installation
 
@@ -56,7 +56,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.   
    * @n
    * @n
-   * @n  In low detection mode, the sensor recognize one gesture every 2 seconds, and we integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
+   * @n  In low detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
    * @n  The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    */
