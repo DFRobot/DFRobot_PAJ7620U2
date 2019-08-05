@@ -1,7 +1,7 @@
 # DFRobot_PAJ7620
 The PAJ7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or departing object from the sensor. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete sensor solution<br>
 * PAJ7620U2-based gesture recognition sensor, high accuracy, long detecting distance(the distance on the datasheet is 0-15cm, but actually it's up to 20cm during our test).
-* We expanded a slow detection mode with 2s recognition cycle. Except the original 9 gestures, we developed four gesutres for this mode: wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly, which is very suitable for the beginners.  
+* We expanded a slow detection mode with 2s recognition cycle. Besides the original 9 gestures, we developed four gesutres for this mode: wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly, which is very suitable for the beginners.  
 
 这里需要显示拍照图片，可以一张图片，可以多张图片（不要用SVG图）
 
