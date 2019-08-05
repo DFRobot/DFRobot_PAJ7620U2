@@ -22,7 +22,7 @@ The PAJ7620 integrates gesture recognition function with general I2C interface i
 
 ## Summary
 
-In this Arduino library, we have realized the basic usage of the PAJ7620 gesture sensor. You can experience the functions below using the built-in examples: 
+In this Arduino library, we show you the basic usage of the PAJ7620 gesture sensor. You can experience the functions below using the built-in examples: 
   1. Read the 9 gestures' function in fast mode. 
   2. Read the function of the 9 basic gestures and 4 expanded gestures in slow mode.
   3. An example of gesture sequence recognition in fast mode, we call it gesture code.
@@ -57,23 +57,23 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n
    * @n
    * @n  In low detection mode, the sensor recognize one gesture every 2 seconds, and we integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
-   * @n  It can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
+   * @n  The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    */
   void setGestureHighRate(bool b);
 
   /**
-   * @brief 获取手势号码对应的字符串描述
-   * @param gesture 包含在eGesture_t中的手势号码
-   * @return 手势号码对应的文字描述信息，如果输入了手势表中不存在的手势，返回空字符串
-   * @n 正常的返回值可能是   "None","Right","Left", "Up", "Down", "Forward", "Backward", "Clockwise",
+   * @brief Get the string descritpion corresponding to the gesture number. 
+   * @param gesture Gesture number inlcuded in the eGesture_t
+   * @return textual description related to the gesture number:if the gesture input in the gesture table doesn't exist, return null string 
+   * @n Normally, it may return "None","Right","Left", "Up", "Down", "Forward", "Backward", "Clockwise",
    * @n "Anti-Clockwise", "Wave", "WaveSlowlyDisorder", "WaveSlowlyLeftRight", "WaveSlowlyUpDown",
    * @n "WaveSlowlyForwardBackward"
    */
   String gestureDescription(eGesture_t gesture);
   /**
-   * @brief 获取手势
-   * @return 返回手势，可能是的值为eGestureNone  eGestureRight  eGestureLeft  eGestureUp  
+   * @brief Get gesture
+   * @return The gesture value it may return: eGestureNone  eGestureRight  eGestureLeft  eGestureUp  
    * @n     eGestureDown  eGestureForward  eGestureBackward  eGestureClockwise
    * @n     eGestureWave  eGestureWaveSlowlyDisorder  eGestureWaveSlowlyLeftRight  
    * @n     eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
