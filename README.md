@@ -22,7 +22,7 @@ The PAJ7620 integrates gesture recognition function with general I2C interface i
 
 ## Summary
 
-In this Arduino library, we show you the basic usage of the PAJ7620 gesture sensor. You can experience the functions below using the built-in examples: 
+In this Arduino library, we will show you the basic usage of the PAJ7620 gesture sensor. You can experience the functions below using the built-in examples: 
   1. Read the 9 gestures' function in fast mode. 
   2. Read the function of the 9 basic gestures and 4 expanded gestures in slow mode.
   3. An example of gesture sequence recognition in fast mode, we call it gesture code.
@@ -93,8 +93,8 @@ micro:bit        |      √       |              |             |
 
 ## History
 
-- data 2019-7-16
-- version V1.0
+- Data 2019-7-16
+- Version V1.0
 
 
 ## Credits
