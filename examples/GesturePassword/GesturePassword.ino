@@ -1,8 +1,8 @@
 /*!
  * @file GesturePassword.ino
- * @brief 在高速模式下，通过自己写算法，实现手势密码
- * @n 在20秒钟内输入手势密码，如果正确，则进入系统，否则继续等待用户输入密码
- * @n 超时时间可以通过更改TIMEOUT宏来调节，单位是毫秒
+ * @brief Write algorithms in fast mode to realize gesture password. 
+ * @n Input gesture password in 20sm, if correct, enter the system, otherwise, continue to wait for users to input password.
+ * @n The timeout period can be adjusted via macro TIMEOUT, unit(mm). 
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
@@ -18,13 +18,13 @@
 DFRobot_PAJ7620U2 paj;
 
 
-//你需要在TIMEOUT毫秒内输入正确的手势up up down down left left right right
+//Input the correct gestures within TIMEOUT period (mm):up up down down left left right right
 DFRobot_PAJ7620U2::eGesture_t password[]={DFRobot_PAJ7620U2::eGestureUp,DFRobot_PAJ7620U2::eGestureUp,DFRobot_PAJ7620U2::eGestureDown,DFRobot_PAJ7620U2::eGestureDown,\
   DFRobot_PAJ7620U2::eGestureLeft,DFRobot_PAJ7620U2::eGestureLeft,DFRobot_PAJ7620U2::eGestureRight,DFRobot_PAJ7620U2::eGestureRight};
 
-static uint8_t index = 0;     //已经输入正确密码的个数
-bool correct = false;  //密码是否已经输入正确
-#define TIMEOUT 20000 //输入密码超时时间，单位是毫秒
+static uint8_t index = 0;     //The number of the correctly input password 
+bool correct = false;  //Whether the input password is correct 
+#define TIMEOUT 20000 //Set Timeout period, unit(mm)
 
 void setup()
 {
@@ -32,22 +32,23 @@ void setup()
   delay(300);
   Serial.println("Gesture recognition system base on PAJ7620U2");
   while(paj.begin() != 0){
-    Serial.println("initial PAJ7620U2 failure! 请检查设备是否稳定连接，线序是否正确");
+    Serial.println("initial PAJ7620U2 failure! Please check if all the connections are fine, or if the wire sequence is correct?");
     delay(500);
   }
-  Serial.println("PAJ7620U2初始化完成，可以开始测试手势识别功能了");
+  Serial.println("PAJ7620U2 init finished, start to test the gesture recognition function.");
   
-  /*设置快速挥手识别模式
-   *参数填写false 模块进入慢速识别状态，每2秒识别一个动作，我们将一些扩展动作集成到库内部，方便基础用户使用
-   *可以识别的动作包括向左滑动 向右滑动 向上滑动 向下滑动 向前滑动 向后滑动 逆时针 顺时针 快速挥手 9个基础动作
-   *左右慢挥手 上下慢挥手 前后慢挥手 乱序慢挥手  4个扩展动作 
+  /*Set to fast detection mode 
+   *If filling the parameter false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
+   *The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
+   *wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
+   * 
    *
    *
    *
-   *参数填写true 模块进入快速识别状态
-   *可以识别的动作包括向左滑动 向右滑动 向上滑动 向下滑动 向前滑动 向后滑动 逆时针 顺时针 快速挥手 9个动作
-   *高级用户如果想要用这些动作的组合，需要在外部自己算法逻辑，比如左右快速挥手，手斜向下滑动，因为每个人用到的动作有限
-   *在高速模式下，我们不计划将更多的扩展动作集在库中，需要用户在ino文件中自己完成算法逻辑
+   *If filling the parameter true, the module enters fast detection mode. 
+   *The fast mode can recognize 9 gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave
+   *To detect the combination of these gestures, like wave left, right and left quickly, users needs to design their own algorithms logic.
+   * Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.
    */
   paj.setGestureHighRate(true);
 }
