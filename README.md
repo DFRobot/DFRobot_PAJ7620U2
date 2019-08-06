@@ -35,8 +35,8 @@ To use this library, first download the library file, paste it into the \Arduino
 
 ```C++
   /**
-   * @brief Constructor 构造函数
-   * @param mode When building a device, designate its default working mode. 构造设备时,可指定默认的工作模式
+   * @brief Constructor
+   * @param mode Call the function and designate the device's default working mode. 
    */
   DFRobot_PAJ7620U2(TwoWire *pWire=&Wire);
 
