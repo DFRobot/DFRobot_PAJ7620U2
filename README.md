@@ -65,7 +65,7 @@ To use this library, first download the library file, paste it into the \Arduino
   /**
    * @brief Get the string descritpion corresponding to the gesture number. 
    * @param gesture Gesture number inlcuded in the eGesture_t
-   * @return textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, return null string 
+   * @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, return null string 
    * @n Normally, it may return "None","Right","Left", "Up", "Down", "Forward", "Backward", "Clockwise",
    * @n "Anti-Clockwise", "Wave", "WaveSlowlyDisorder", "WaveSlowlyLeftRight", "WaveSlowlyUpDown",
    * @n "WaveSlowlyForwardBackward"
