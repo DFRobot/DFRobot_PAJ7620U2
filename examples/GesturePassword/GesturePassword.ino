@@ -39,7 +39,7 @@ void setup()
   
   /*Set to fast detection mode 
    *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
-   *The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
+   *The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    *wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    * 
    *
