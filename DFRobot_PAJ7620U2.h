@@ -1,6 +1,6 @@
 /*!
  * @file DFRobot_PAJ7620U2.h
- * @brief 定义DFRobot_PAJ7620手势识别传感器类的基础结构
+ * @brief Define the basic structure of the class DFRobot_PAJ7620 gesture sensor 
  * @n The PAC7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or departing object from the sensor. The PAC7620 is designed with great flexibility in power-saving mechanism, well suit for low power battery operated HMI devices. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete sensor solution
  
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
@@ -18,7 +18,7 @@
 #include "Arduino.h"
 #include <Wire.h>
 
-//打开这个宏，可以看到程序的详细运行过程
+//Open this macro to check the detailed running process of the program.
 //#define ENABLE_DBG
 
 #ifdef ENABLE_DBG
@@ -73,40 +73,38 @@
 #define PAJ7620_DISABLE	0x00
 
 #define GES_REACTION_TIME		50	// You can adjust the reaction time according to the actual circumstance.
-#define GES_ENTRY_TIME			2000	// When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s). 
+#define GES_ENTRY_TIME			2000	// When you want to recognize the Forward/Backward gestures, your gestures' reaction time must be less than GES_ENTRY_TIME(0.8s). 
 #define GES_QUIT_TIME			1000
 
 class DFRobot_PAJ7620U2
 {
 public:
-  #define ERR_OK             0      //无错误
-  #define ERR_DATA_BUS      -1      //数据总线错误
-  #define ERR_IC_VERSION    -2      //芯片版本不匹配
-  /*
-   这里从数据手册上抄写关于这个寄存器的描述
-  */
+  #define ERR_OK             0      //OK
+  #define ERR_DATA_BUS      -1      //Error in Data Bus 
+  #define ERR_IC_VERSION    -2      //IC version mismatch
+  
   typedef enum{
-    eGestureNone = 0x00, /**< 未探测到任何动作 */
-    eGestureRight = 0x01<<0, /**< 从左向右运动探测 */
-    eGestureLeft  = 0x01<<1, /**< 从右向左运动探测 */
-    eGestureUp    = 0x01<<2, /**< 从下向上运动探测 */
-    eGestureDown  = 0x01<<3, /**< 从上向下运动探测 */
-    eGestureForward   = 0x01<<4, /**< 从远到近运动探测 */
-    eGestureBackward  = 0x01<<5, /**< 从近到远运动探测 */
-    eGestureClockwise = 0x01<<6, /**< 顺时针运动探测 */
-    eGestureAntiClockwise = 0x01<<7, /**< 逆时针运动探测 */
-    eGestureWave = 0x01<<8, /**< 快速挥手运动探测 */
-    eGestureWaveSlowlyDisorder = 0x01<<9, /**< 乱序挥手运动探测 */
-    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< 左右慢速挥手运动探测 */
-    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< 上下慢速挥手运动探测 */
-    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< 前后慢速挥手运动探测 */
-    eGestureAll = 0xff /**< 支持所有动作，无实际意义，用于写程序抽象逻辑*/
+    eGestureNone = 0x00, /**< no gestures detected */
+    eGestureRight = 0x01<<0, /**< move from left to right */
+    eGestureLeft  = 0x01<<1, /**< move from right to left */
+    eGestureUp    = 0x01<<2, /**< move from down to up */
+    eGestureDown  = 0x01<<3, /**< move form up to down */
+    eGestureForward   = 0x01<<4, /**< starts far, move close to sensor */
+    eGestureBackward  = 0x01<<5, /**< starts near, move far to sensor */
+    eGestureClockwise = 0x01<<6, /**< clockwise */
+    eGestureAntiClockwise = 0x01<<7, /**< anti-clockwise */
+    eGestureWave = 0x01<<8, /**< wave quickly */
+    eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly */
+    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< wave slowly from left to right */
+    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< wave slowly from up to down */
+    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< move slowly to approach and then depart the sensor. */
+    eGestureAll = 0xff /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
   }eGesture_t;
   
   typedef enum {
-    /**< 某些寄存器定义位于Bank0*/ 
+    /**< some registers are located in Bank0*/ 
     eBank0 = 0,
-    /**< 某些寄存器定义位于Bank1*/
+    /**< some registers are located in Bank1*/
     eBank1 = 1,
   }eBank_t;
   
@@ -118,97 +116,97 @@ public:
   }eRateMode_t;
 
   typedef struct{
-    /**< 手势枚举变量X */
+    /**< Gesture enumeration variable X */
     eGesture_t gesture;
-    /**< 手势枚举变量X对应的文字描述 */
+    /**< Description about the gesture enumeration variable X */
     const char * description;
   }sGestureDescription_t;
 
 public:
   /**
-   * @brief 构造函数
-   * @param mode 构造设备时，可以指定它的默认工作模式
+   * @brief Constuctor
+   * @param mode Call the function and designate the device's default working mode. 
    */
   DFRobot_PAJ7620U2(TwoWire *pWire=&Wire);
 
   /**
-   * @brief 初始化函数
-   * @return 返回0表示初始化成功，返回其他值表示初始化失败
+   * @brief init function
+   * @return return 0 if initialization succeeds, otherwise return non-zero. 
    */
   int begin(void);
 
   /**
-   * @brief 设置告诉手势识别模式
-   * @param b true表示配置为高速识别模式，以最快速度识别手势并返回。
-   * @n  false表示低速模式，在低速模式下，系统会做更多的判断
-   * @n  在高速识别模式下，可以快速识别的动作包括向左滑动 向右滑动 向上滑动 向下滑动 
-   * @n  向前滑动 向后滑动 逆时针 顺时针 快速挥手 9个动作
-   * @n  高级用户如果想要用这些动作的组合，需要在外部自己算法逻辑，比如左右左快速挥手
-   * @n  因为每个人用到的动作有限 ，我们没有将更多的扩展动作集在库中，需要用户在ino文件中自己完成算法逻辑
+   * @brief Set gesture detection mode 
+   * @param b true Set to fast detection mode, recognize gestures quickly and return. 
+   * @n  false Set to slow detection mode, system will do more judgements. 
+   * @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down,
+   * @n  forward, backward, clockwise, counter-clockwise, wave. 
+   * @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own algorithms logic.
+   * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.
    * @n
    * @n
-   * @n  在低速识别模式下，每2秒识别一个动作，我们将一些扩展动作集成到库内部，方便基础用户使用
-   * @n  可以识别的动作包括向左滑动 向右滑动 向上滑动 向下滑动 向前滑动 向后滑动 
-   * @n  逆时针 顺时针 快速挥手 9个基础动作 左右慢挥手 上下慢挥手 前后慢挥手 乱序慢挥手  4个扩展动作 
+   * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.
+   * @n  The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
+   * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    */
   void setGestureHighRate(bool b);
 
   /**
-   * @brief 获取手势号码对应的字符串描述
-   * @param gesture 包含在eGesture_t中的手势号码
-   * @return 手势号码对应的文字描述信息，如果输入了手势表中不存在的手势，返回空字符串
+   * @brief Get the string descritpion corresponding to the gesture number.
+   * @param gesture Gesture number inlcuded in the eGesture_t
+   * @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, return null string
    */
   String gestureDescription(eGesture_t gesture);
   /**
-   * @brief 获取手势
-   * @return 返回手势，可能是eGesture_t中除了eGestureAll以外的任何值
+   * @brief Get gesture
+   * @return Return gesture, could be any value except eGestureAll in eGesture_t.
    */
   eGesture_t getGesture(void);
 
 private:
   /**
-   * @brief 切换Bank
-   * @param bank  要切换的Bank，可选 eBank0或eBank1
-   * @return 返回0表示切换成功，返回其他值表示切换失败
+   * @brief Switch Bank
+   * @param bank  The bank you will switch to, eBank0 or eBank1
+   * @return Return 0 if switching successfully, otherwise return non-zero. 
    */
   int selectBank(eBank_t bank);
 
   /**
-   * @brief 设置模块速率模式，当前此API未启用
-   * @param mode 用户配置的模式，可以是eNormalRate 或 eGamingRate
-   * @return 返回0表示设置成功，返回其他值表示设置失败
+   * @brief Set rate mode of the module, the API is disabled currently.
+   * @param mode The mode users can configure, eNormalRate or eGamingRate
+   * @return Return 0 if setting is successful, otherwise return non-zero. 
    */
   int setNormalOrGamingMode(eRateMode_t mode);
   
   /**
-   * @brief 写寄存器函数
-   * @param reg  寄存器地址 8bits
-   * @param pBuf 要写入数据的存放缓存
-   * @param size 要写入数据的长度
+   * @brief Write register function 
+   * @param reg  register address 8bits
+   * @param pBuf Storage cache of the data to be written into 
+   * @param size Length of the data to be written into 
    */
   void writeReg(uint8_t reg, const void* pBuf, size_t size);
 
   /**
-   * @brief 读取寄存器函数
-   * @param reg  寄存器地址 8bits
-   * @param pBuf 要写入数据的存放缓存
-   * @param size 要写入数据的长度
-   * @return 返回实际读取的长度，返回0表示读取失败
+   * @brief Read register function 
+   * @param reg  register address 8bits
+   * @param pBuf Storage cache of the data to be written into 
+   * @param size Length of the data to be written into 
+   * @return Return the actually read length, fails to read if return 0.  
    */
   uint8_t readReg(uint8_t reg, void* pBuf, size_t size);
 
 private:
-  /*! _pWire是应用程序传过来的 TwoWire类指针 */ 
+  /*! _pWire is TwoWire type pointer from apllication program */ 
   TwoWire *_pWire;
-  /*! 初始化配置表 */
+  /*! init configuration table */
   static const uint8_t /*PROGMEM*/ initRegisterArray[219][2]; 
-  /*! 描述的手势编码和手势字符串描述对应表 */
+  /*! Table of gesture number corresponding to string description */
   static const sGestureDescription_t /*PROGMEM*/ gestureDescriptionsTable[14]; 
-  /*! PAJ7620U2的IIC地址，不可修改*/
+  /*! IIC address of PAJ7620U2, cannot be revised.*/
   const uint8_t _deviceAddr = PAJ7620_IIC_ADDR;
-  /*! 是否配置为高速识别模式 详细信息解释详见setGestureHighRate方法*/
+  /*! Whether it is set to fast detection mode, refer to setGestureHighRate for details*/
   bool _gestureHighRate = true;
-  /*! 当前手势*/  
+  /*! Current gesture*/  
   eGesture_t _gesture;
 };
 
