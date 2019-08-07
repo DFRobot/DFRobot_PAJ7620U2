@@ -1,6 +1,6 @@
 /*!
  * @file DFRobot_PAJ7620U2.cpp
- * @brief 定义DFRobot_Sensor 类的基础结构，基础方法的实现
+ * @brief Define the basic structure of DFRobot_Sensor Class
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
