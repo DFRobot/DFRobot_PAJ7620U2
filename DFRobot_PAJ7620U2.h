@@ -146,7 +146,7 @@ public:
    * @n
    * @n
    * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.
-   * @n  The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
+   * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    */
   void setGestureHighRate(bool b);
