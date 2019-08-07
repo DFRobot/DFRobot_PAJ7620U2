@@ -52,7 +52,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n  false Slow detection mode, the system will do more judgements. 
    * @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down, 
    * @n  forward, backward, clockwise, counter-clockwise, wave.  
-   * @n  To detect the combination of these gestures, like wave left, right and left quickly, users needs to design their own algorithms logic. 
+   * @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own algorithms logic. 
    * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.   
    * @n
    * @n
