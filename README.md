@@ -56,7 +56,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.   
    * @n
    * @n
-   * @n  In low detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
+   * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
    * @n  The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    */
@@ -65,7 +65,7 @@ To use this library, first download the library file, paste it into the \Arduino
   /**
    * @brief Get the string descritpion corresponding to the gesture number. 
    * @param gesture Gesture number inlcuded in the eGesture_t
-   * @return textual description related to the gesture number:if the gesture input in the gesture table doesn't exist, return null string 
+   * @return textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, return null string 
    * @n Normally, it may return "None","Right","Left", "Up", "Down", "Forward", "Backward", "Clockwise",
    * @n "Anti-Clockwise", "Wave", "WaveSlowlyDisorder", "WaveSlowlyLeftRight", "WaveSlowlyUpDown",
    * @n "WaveSlowlyForwardBackward"
