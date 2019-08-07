@@ -38,14 +38,14 @@ void setup()
   Serial.println("PAJ7620U2 init finished, start to test the gesture recognition function.");
   
   /*Set to fast detection mode 
-   *If filling the parameter false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
+   *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
    *The low mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
    *wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
    * 
    *
    *
    *
-   *If filling the parameter true, the module enters fast detection mode. 
+   *If the parameter is set to true, the module enters fast detection mode. 
    *The fast mode can recognize 9 gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave
    *To detect the combination of these gestures, like wave left, right and left quickly, users needs to design their own algorithms logic.
    * Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.
@@ -55,23 +55,23 @@ void setup()
 
 void loop()
 {
-  /* 读取手势号码（返回eGesture_t枚举类型）
+  /* Read gesture number（return eGesture_t enumerated type）
    * eGestureNone  eGestureRight  eGestureLeft  eGestureUp  eGestureDown  eGestureForward
    * eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
    * eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
    */
   DFRobot_PAJ7620U2::eGesture_t gesture;
   uint8_t pdLen = sizeof(password)/sizeof(password[0]);
-  Serial.print("密码长度=");Serial.println(pdLen);
+  Serial.print("password length=");Serial.println(pdLen);
   unsigned long startTimeStamp = millis();
-  Serial.print("请输入第 "); Serial.print(index+1); Serial.println(" 个手势");
+  Serial.print("please input the "); Serial.print(index+1); Serial.println(" gesture");
   do{
     unsigned long now = millis();
     if(now - startTimeStamp >= TIMEOUT){
         startTimeStamp = now;
         index = 0;
-        Serial.println("输入超时，请重新输入");
-        Serial.print("请输入第 "); Serial.print(index+1); Serial.println(" 个手势");
+        Serial.println("timeout，input again");
+        Serial.print("please input the "); Serial.print(index+1); Serial.println(" gesture");
     }
     gesture = paj.getGesture();
     if(gesture == paj.eGestureNone){
@@ -80,21 +80,21 @@ void loop()
     Serial.println(paj.gestureDescription(gesture));
     if(gesture == password[index]){
       index++;
-      Serial.print("请输入第 "); Serial.print(index+1); Serial.println(" 个手势");
+      Serial.print("please input the "); Serial.print(index+1); Serial.println(" gesture");
     }else{
       startTimeStamp = millis();
       index = 0;
-      Serial.println("手势密码输入错误，请重新输入");
-      Serial.print("请输入第 "); Serial.print(index+1); Serial.println(" 个手势");
+      Serial.println("gesture password is incorrect, try again");
+      Serial.print("please input the "); Serial.print(index+1); Serial.println(" gesture");
     }
     if(index == pdLen){
       correct = true;
     }
   }while(!correct);
-  Serial.println("手势解锁成功，您已经进入系统");
-  Serial.print("输入手势密码耗时 ");
+  Serial.println("Unlock all gestures successfully, you have entered the system");
+  Serial.print("To enter the gesture password, you have spent");
   Serial.print((millis()-startTimeStamp)/1000);
-  Serial.println(" 秒");
+  Serial.println(" seconds");
   
   
   //TO DO
