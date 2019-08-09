@@ -1,7 +1,7 @@
 # DFRobot_PAJ7620
 The PAJ7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or departing object from the sensor. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete sensor solution<br>
 * PAJ7620U2-based gesture recognition sensor, high accuracy, long detecting distance(the distance on the datasheet is 0-15cm, but actually it's up to 20cm during our test).
-* We expanded a slow detection mode with 2s recognition cycle. Besides the original 9 gestures, we specifically expanded four gesutres for this mode: slowly move left or right, slowly move up or down, slowly move forward or backward, wave slowly and randomly, which is very suitable for the beginners.  
+* We expanded a slow detection mode with 2s recognition cycle. Besides the original 9 gestures, we specifically expanded four gesutres for this mode: slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly, which is very suitable for the beginners.  
 
 这里需要显示拍照图片，可以一张图片，可以多张图片（不要用SVG图）
 
@@ -58,7 +58,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n
    * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.  
    * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
-   * @n  slowly move left or right, slowly move up or down, slowly move forward or backward, wave slowly and randomly
+   * @n  slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly
    */
   void setGestureHighRate(bool b);
 
