@@ -94,10 +94,10 @@ public:
     eGestureClockwise = 0x01<<6, /**< clockwise */
     eGestureAntiClockwise = 0x01<<7, /**< anti-clockwise */
     eGestureWave = 0x01<<8, /**< wave quickly */
-    eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly */
-    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< slowly move left or right */
-    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< slowly move up or down */
-    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly move forward or backward */
+    eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly and slowly */
+    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< slowly move left and right */
+    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< slowly move up and down */
+    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly move forward and backward */
     eGestureAll = 0xff /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
   }eGesture_t;
   
@@ -147,7 +147,7 @@ public:
    * @n
    * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.
    * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
-   * @n  wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly
+   * @n  slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly
    */
   void setGestureHighRate(bool b);
 
