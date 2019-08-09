@@ -97,7 +97,7 @@ public:
     eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly */
     eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< slowly move left or right */
     eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< slowly move up or down */
-    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly to approach or depart the sensor. */
+    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly move forward or backward */
     eGestureAll = 0xff /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
   }eGesture_t;
   
