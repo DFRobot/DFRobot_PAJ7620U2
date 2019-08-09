@@ -1,7 +1,7 @@
 /*!
  * @file GestureRecognize_LowRate.ino
  * @brief Present the 9 built-in gestures the sensor supports and 4 extended gestures in the slow mode.  
- * @n Wave you hand above the sensor(within 0~20cm), it can detect: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave, wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly.
+ * @n Wave you hand above the sensor(within 0~20cm), it can detect: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly.
  * @n For more usages of the sensor, refer to the description about setGestureLowRate in function setup.  
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
@@ -31,7 +31,7 @@ void setup()
   /*Set fast detection mode 
    *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.
    *The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave.
-   *wave slowly from left to right, from up to down, from forward to backward, wave slowly and randomly. 
+   *slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly. 
    *
    *
    *
