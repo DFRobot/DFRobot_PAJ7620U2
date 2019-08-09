@@ -95,9 +95,9 @@ public:
     eGestureAntiClockwise = 0x01<<7, /**< anti-clockwise */
     eGestureWave = 0x01<<8, /**< wave quickly */
     eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly */
-    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< wave slowly from left to right */
-    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< wave slowly from up to down */
-    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< move slowly to approach and then depart the sensor. */
+    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< slowly move left or right */
+    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< slowly move up or down */
+    eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly to approach or depart the sensor. */
     eGestureAll = 0xff /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
   }eGesture_t;
   
