@@ -189,8 +189,8 @@ private:
   /**
    * @brief Read register function 
    * @param reg  register address 8bits
-   * @param pBuf Storage cache of the data to be written into 
-   * @param size Length of the data to be written into 
+   * @param pBuf Storage cache of the data to be read
+   * @param size Length of the data to be read
    * @return Return the actually read length, fails to read if return 0.  
    */
   uint8_t readReg(uint8_t reg, void* pBuf, size_t size);
