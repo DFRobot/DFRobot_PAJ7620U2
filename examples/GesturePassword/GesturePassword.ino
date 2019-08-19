@@ -38,9 +38,11 @@ void setup()
   Serial.println("PAJ7620U2 init finished, start to test the gesture recognition function.");
   
   /*Set to fast detection mode 
-   *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
-   *The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
-   *slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly
+   * If the parameter is set to false, the module enters slow detection mode, and it detects one 
+   * gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.   
+   * The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, 
+   * forward, backward, clockwise, counter-clockwise, wave. slowly move left and right, slowly move up and down,
+   * slowly move forward and backward, wave slowly and randomly
    * 
    *
    *
