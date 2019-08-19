@@ -1,7 +1,8 @@
 /*!
  * @file GestureRecognize_HighRate.ino
  * @brief Present the 9 built-in gestures data the sensor supports 
- * @n Wave your hand above the sensor (within 0~20cm), it can recognize 9 kinds of gestures: move up, down, left, right, forward, backward, clockwise, anti-clockwise, wave.
+ * @n Wave your hand above the sensor (within 0~20cm), it can recognize 9 kinds of gestures: move up, down, left, right, forward,
+ * @n backward, clockwise, anti-clockwise, wave.
  * @n For more usages of the sensor, refer to the description about setGestureHighRate in function setup.
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
@@ -29,16 +30,18 @@ void setup()
   Serial.println("PAJ7620U2 init completed, start to test the gesture recognition function");
   
   /*Set fast detection mode 
-   *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated some gestures inside the module to make it convenient for beginners.
-   *The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave.
-   *slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly.
+   *If the parameter is set to false, the module enters slow detection mode, and it detects one gesture every 2s. We have integrated
+   *some gestures inside the module to make it convenient for beginners.
+   *The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, 
+   *counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly.
    *
    *
    *
    *If the parameter is set to true, the module enters fast detection mode. 
    *The fast mode can recognize 9 gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave
    *To detect the combination of these gestures, like wave left, right and left quickly, users needs to design their own algorithms logic.
-   *Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.
+   *Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library. 
+   *If necessary, you can complete the algorithm logic in the ino file by yourself.
    */
   paj.setGestureHighRate(true);
 
