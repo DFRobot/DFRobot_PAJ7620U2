@@ -1,7 +1,12 @@
 /*!
  * @file DFRobot_PAJ7620U2.h
  * @brief Define the basic structure of the class DFRobot_PAJ7620 gesture sensor 
- * @n The PAC7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or departing object from the sensor. The PAC7620 is designed with great flexibility in power-saving mechanism, well suit for low power battery operated HMI devices. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete sensor solution
+ * @n The PAC7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor
+ * @n system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise, 
+ * @n circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or
+ * @n departing object from the sensor. The PAC7620 is designed with great flexibility in power-saving mechanism, well suit for low 
+ * @n power battery operated HMI devices. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete
+ * @n sensor solution.
  
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
@@ -73,7 +78,7 @@
 #define PAJ7620_DISABLE	0x00
 
 #define GES_REACTION_TIME		50	// You can adjust the reaction time according to the actual circumstance.
-#define GES_ENTRY_TIME			2000	// When you want to recognize the Forward/Backward gestures, your gestures' reaction time must be less than GES_ENTRY_TIME(0.8s). 
+#define GES_ENTRY_TIME			2000	// When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s). 
 #define GES_QUIT_TIME			1000
 
 class DFRobot_PAJ7620U2
@@ -141,20 +146,25 @@ public:
    * @n  false Set to slow detection mode, system will do more judgements. 
    * @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down,
    * @n  forward, backward, clockwise, counter-clockwise, wave. 
-   * @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own algorithms logic.
-   * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. If necessary, you can complete the algorithm logic in the ino file by yourself.
+   * @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own 
+   * @n  algorithms logic.
+   * @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. 
+   * @n  If necessary, you can complete the algorithm logic in the ino file by yourself.
    * @n
    * @n
-   * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures inside the library, which is convenient for the beginners to use.
-   * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, clockwise, counter-clockwise, wave. 
-   * @n  slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly
+   * @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures 
+   * @n  inside the library, which is convenient for the beginners to use.
+   * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, 
+   * @n  clockwise, counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, 
+   * @n  wave slowly and randomly.
    */
   void setGestureHighRate(bool b);
 
   /**
    * @brief Get the string descritpion corresponding to the gesture number.
    * @param gesture Gesture number inlcuded in the eGesture_t
-   * @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, return null string
+   * @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, 
+   * @n return null string.
    */
   String gestureDescription(eGesture_t gesture);
   /**
