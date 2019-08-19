@@ -48,7 +48,7 @@ To use this library, first download the library file, paste it into the \Arduino
 
   /**
    * @brief Set the gesture recognition mode 
-   * @param b true Fast detection mode, recognize gestures quickly and return 
+   * @param b true Fast detection mode, recognize gestures quickly and return. 
    * @n  false Slow detection mode, the system will do more judgements. 
    * @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down, forward,
    * @n  backward, clockwise, counter-clockwise, wave.  
@@ -62,7 +62,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @n  expanded gestures inside the library, which is convenient for the beginners to use.  
    * @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down,      
    * @n  forward, backward, clockwise, counter-clockwise, wave, slowly move left and right, slowly move up 
-   * @n  and down, slowly move forward and backward, wave slowly and randomly
+   * @n  and down, slowly move forward and backward, wave slowly and randomly.
    */
   void setGestureHighRate(bool b);
 
