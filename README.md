@@ -3,10 +3,9 @@ The PAJ7620 integrates gesture recognition function with general I2C interface i
 * PAJ7620U2-based gesture recognition sensor, high accuracy, long detecting distance(the distance on the datasheet is 0-15cm, but actually it's up to 20cm during our test).
 * We expanded a slow detection mode with 2s recognition cycle. Besides the original 9 gestures, we specifically expanded four gesutres for this mode: slowly move left and right, slowly move up and down, slowly move forward and backward, wave slowly and randomly, which is very suitable for the beginners.  
 
-这里需要显示拍照图片，可以一张图片，可以多张图片（不要用SVG图）
-
-![正反面svg效果图](https://github.com/ouki-wang/DFRobot_Sensor/raw/master/resources/images/SEN0245svg1.png)
-
+<br>
+<img src="./resources/images/SEN0315_SVG.png">
+<br>
 
 ## Product Link（链接到英文商城）
     SKU：PAJ7620挥手传感器
