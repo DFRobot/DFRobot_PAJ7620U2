@@ -1,17 +1,17 @@
 #-*- coding: utf-8 -*-
 '''
- * @file GesturePassword.py
- * @brief Write algorithms in fast mode to realize gesture password. 
- * @n Input gesture password in 20sm, if correct, enter the system, otherwise, continue to wait for users to input password.
- * @n The timeout period can be adjusted via macro TIMEOUT, unit(mm). 
- *
- * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
- * @author      Alexander(ouki.wang@dfrobot.com)
- * @version  V1.0
- * @date  2019-07-16
- * @get from https://www.dfrobot.com
- * @url https://github.com/DFRobot/DFRobot_PAJ7620U2
+  @file GesturePassword.py
+  @brief Write algorithms in fast mode to realize gesture password. 
+  @n Input gesture password in 20sm, if correct, enter the system, otherwise, continue to wait for users to input password.
+  @n The timeout period can be adjusted via macro TIMEOUT, unit(mm). 
+ 
+  @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @licence     The MIT License (MIT)
+  @author      Alexander(ouki.wang@dfrobot.com)
+  @version  V1.0
+  @date  2019-07-16
+  @get from https://www.dfrobot.com
+  @url https://github.com/DFRobot/DFRobot_PAJ7620U2
 '''
 
 import sys
@@ -19,7 +19,7 @@ sys.path.append('../../')
 import time
 from DFRobot_PAJ7620U2 import *
 
-paj = DFRobot_PAJ7620U2()
+paj = DFRobot_PAJ7620U2(1)
 
 #Input the correct gestures within TIMEOUT period (mm):up up down down left left right right
 password = [paj.eGestureUp,paj.eGestureUp,paj.eGestureDown,paj.eGestureDown,paj.eGestureLeft,paj.eGestureLeft,paj.eGestureRight,paj.eGestureRight]
@@ -29,7 +29,6 @@ correct = False  #Whether the input password is correct
 TIMEOUT=20000    #Set Timeout period, unit(mm)
 
 def setup():
-  sleep(0.3)
   print("Gesture recognition system base on PAJ7620U2")
   while(paj.begin() != 0):
     print("initial PAJ7620U2 failure! Please check if all the connections are fine, or if the wire sequence is correct?")
@@ -54,12 +53,12 @@ def setup():
 
 
 def loop():
-  '''Read gesture number（return Gesture type）
+  '''Read gesture number (return Gesture type)
    # eGestureNone  eGestureRight  eGestureLeft  eGestureUp  eGestureDown  eGestureForward
    # eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
    # eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
-   '''
-  uint8_t pdLen = len(password)
+  '''
+  pdLen = len(password)
   print("password length=%d"%pd_len);
   start_timestamp = millis();
   print("please input the %d gesture"%(index+1))
@@ -78,7 +77,7 @@ def loop():
     
     print(paj.gesture_description(gesture));
     if(gesture == password[index]):
-      index = index += 1
+      index = index + 1
       print("please input the %d gesture"%(index+1))
     else:
       start_timestamp = millis();

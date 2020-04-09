@@ -1,22 +1,21 @@
+#-*- coding: utf-8 -*-
 """ file DFRobot_Sensor.py
-/*!
- # @file DFRobot_PAJ7620U2.h
- # @brief Define the basic structure of the class DFRobot_PAJ7620 gesture sensor
- # @n The PAC7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor
- # @n system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise,
- # @n circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or
- # @n departing object from the sensor. The PAC7620 is designed with great flexibility in power-saving mechanism, well suit for low
- # @n power battery operated HMI devices. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete
- # @n sensor solution.
+ @file DFRobot_PAJ7620U2.h
+ @brief Define the basic structure of the class DFRobot_PAJ7620 gesture sensor
+ @n The PAC7620 integrates gesture recognition function with general I2C interface into a single chip forming an image analytic sensor
+ @n system. It can recognize 9 human hand gesticulations such as moving up, down, left, right, forward, backward, circle-clockwise,
+ @n circle-counter Key Parameters clockwise, and waving. It also offers built-in proximity detection in sensing approaching or
+ @n departing object from the sensor. The PAC7620 is designed with great flexibility in power-saving mechanism, well suit for low
+ @n power battery operated HMI devices. The PAJ7620 is packaged into module form in-built with IR LED and optics lens as a complete
+ @n sensor solution.
 
- # @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- # @licence     The MIT License (MIT)
- # @author      Alexander(ouki.wang@dfrobot.com)
- # @version  V1.0
- # @date  2019-07-16
- # @get from https://www.dfrobot.com
- # @url https://github.com/DFRobot/DFRobot_PAJ7620U2
- */
+ @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ @licence     The MIT License (MIT)
+ @author      Alexander(ouki.wang@dfrobot.com)
+ @version  V1.0
+ @date  2019-07-16
+ @get from https://www.dfrobot.com
+ @url https://github.com/DFRobot/DFRobot_PAJ7620U2
 """
 
 import sys
@@ -25,7 +24,6 @@ import logging
 from ctypes import *
 import time
 import json
-
 
 
 logger = logging.getLogger()
@@ -78,15 +76,28 @@ PAJ7620_I2C_WAKEUP                       = 0x01
 PAJ7620_I2C_SUSPEND	                     = 0x00
 
 # PAJ7620_ADDR_OPERATION_ENABLE
-PAJ7620_ENABLE	                         = 0x01
-PAJ7620_DISABLE	                         = 0x00
+PAJ7620_ENABLE                           = 0x01
+PAJ7620_DISABLE                          = 0x00
 
-GES_REACTION_TIME		                 = 0.05	# You can adjust the reaction time according to the actual circumstance.
-GES_ENTRY_TIME			                 = 2 	# When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s).
-GES_QUIT_TIME			                 = 1
+GES_REACTION_TIME                        = 0.05	# You can adjust the reaction time according to the actual circumstance.
+GES_ENTRY_TIME                           = 2 	# When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s).
+GES_QUIT_TIME                            = 1
 
-with open("gesrture.json") as f:
-   GESRTURE = json.load(f)
+GESRTURE = json.loads('{\
+ "0": "None",\
+ "1": "Right",\
+ "2": "Left",\
+ "4": "Up",\
+ "8": "Down",\
+ "16": "Forward",\
+ "32": "Backward",\
+ "64":"Clockwise",\
+ "128": "Anti-Clockwise",\
+ "256":"Wave",\
+ "512":"WaveSlowlyDisorder",\
+ "3": "WaveSlowlyLeftRight",\
+ "12": "WaveSlowlyUpDown",\
+ "48": "WaveSlowlyForwardBackward"}')
 
 class DFRobot_PAJ7620U2:
    ERR_OK                               = 0  # OK
@@ -115,8 +126,8 @@ class DFRobot_PAJ7620U2:
    eNormalRate = 0     # Gesture Update Rate is 120HZ, Gesture speed is 60°/s - 600°/s
    eGamingRate = 1     # Gesture Update Rate is 240HZ,Gesture speed is 60°/s - 1200°/s
 
-   __initRegisterArray = [
-       [0xEF,0x00],
+   _init_register_array = [
+      [0xEF,0x00],
       [0x32,0x29],
       [0x33,0x01],
       [0x34,0x00],
@@ -339,16 +350,16 @@ class DFRobot_PAJ7620U2:
        # @brief   Constuctor
        # @return  mode Call the function and designate the device's default working mode.
    '''
-   def __init__(self, pWire):
-       self._pWire = pWire
+   def __init__(self, bus):
+       self.i2c_addr = PAJ7620_IIC_ADDR
+       self.i2cbus = smbus.SMBus(bus)
    '''
       @brief init function
       @return return 0 if initialization succeeds, otherwise return non-zero. 
    '''
    def begin(self):
-      Wire.begin()
-      __selectBank(eBank0)
-      partid = __readReg(PAJ7620_ADDR_PART_ID_LOW)
+      self._select_bank(self.eBank0)
+      partid = self._read_reg(PAJ7620_ADDR_PART_ID_LOW)
       if partid == None:
          logger.warning("bus data access error")
          return ERR_DATA_BUS
@@ -356,34 +367,32 @@ class DFRobot_PAJ7620U2:
 
       if partid[0] != PAJ7620_PARTID:
          return ERR_IC_VERSION;
-      i = 0
-      while i < sizeof(__initRegisterArray)/sizeof(__initRegisterArray[0]):
-         __writeReg(__initRegisterArray[i][0],__initRegisterArray[i][1])
-         i+=1
-      __selectBank(eBank0)
+      
+      for i in  range(0,len(_init_register_array)):
+         self._write_reg(_init_register_array[i][0], [_init_register_array[i][1]])
+      self._select_bank(eBank0)
       return ERR_OK
 
    '''
-   # @brief Set gesture detection mode 
-   # @param b true Set to fast detection mode, recognize gestures quickly and return. 
-   # @n  false Set to slow detection mode, system will do more judgements. 
-   # @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down,
-   # @n  forward, backward, clockwise, counter-clockwise, wave. 
-   # @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own 
-   # @n  algorithms logic.
-   # @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. 
-   # @n  If necessary, you can complete the algorithm logic in the ino file by yourself.
-   # @n
-   # @n
-   # @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures 
-   # @n  inside the library, which is convenient for the beginners to use.
-   # @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, 
-   # @n  clockwise, counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, 
-   # @n  wave slowly and randomly. 
+   @brief Set gesture detection mode 
+   @param b true Set to fast detection mode, recognize gestures quickly and return. 
+   @n  false Set to slow detection mode, system will do more judgements. 
+   @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down,
+   @n  forward, backward, clockwise, counter-clockwise, wave. 
+   @n  To detect the combination of these gestures, like wave left, right and left quickly, users need to design their own 
+   @n  algorithms logic.
+   @n  Since users only use limited gestures, we didn't integrate too much expanded gestures in the library. 
+   @n  If necessary, you can complete the algorithm logic in the ino file by yourself.
+   @n
+   @n
+   @n  In slow detection mode, the sensor recognize one gesture every 2 seconds, and we have integrated the expanded gestures 
+   @n  inside the library, which is convenient for the beginners to use.
+   @n  The slow mode can recognize 9  basic gestures and 4 expanded gestures: move left, right, up, down, forward, backward, 
+   @n  clockwise, counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, 
+   @n  wave slowly and randomly. 
    '''
-   def setGestureHighRate(bool):
-      __gestureHighRate = bool
-
+   def setGestureHighRate(self,v):
+      _gesture_highrate = v
 
    '''
     # @brief Get the string descritpion corresponding to the gesture number.
@@ -391,88 +400,84 @@ class DFRobot_PAJ7620U2:
     # @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist,
     # @n return null string.
    '''
-   def gestureDescription(self,gesrture):
-      # if gesrture in GESRTURE:
-      #    return  GESRTURE[gesrture]
-      # return ""
-      return GESRTURE.get(gesrture, "")
+   def gesture_description(self,gesture):
+      return GESTURE.get(gesture, "")
    '''
    # @brief Get gesture
    # @return Return gesture, could be any value except eGestureAll in eGesture_t.
    '''
-   def getGesture(self):
-      __gesture = __readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
-      __gesture = __gesture << 8
-      if __gesture == eGestureWave:
+   def get_gesture(self):
+      gesture = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
+      gesture = gesture << 8
+      if gesture == eGestureWave:
          logger.info("Wave1 Event Detected")
          time.sleep(GES_QUIT_TIME)
       else :
-         __gesture = eGestureNone
-         __readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_0) # Read Bank_0_Reg_0x43 / 0x44 for gesture result.
-         __gesture = __gesture & 0x00ff
-         if not __gestureHighRate:
+         gesture = eGestureNone
+         self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0) # Read Bank_0_Reg_0x43 / 0x44 for gesture result.
+         gesture = gesture & 0x00ff
+         if not _gestureHighRate:
             time.sleep(GES_ENTRY_TIME)
-            tmp = __readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_0)
+            tmp = _read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0)
             logger.info("tmp=0x%#x"%tmp)
             logger.info("__gesture=0x%#x" % __gesture)
-            __gesture = __gesture|tmp
-         if __gesture != eGestureNone:
+            gesture = _gesture|tmp
+         if gesture != eGestureNone:
             logger.info("")
-         elif __gesture == eGestureRight:
+         elif gesture == eGestureRight:
             logger.info("Right Event Detected")
-         elif __gesture == eGestureLeft:
+         elif gesture == eGestureLeft:
              logger.info("Left Event Detected")
-         elif __gesture== eGestureUp:
+         elif gesture== eGestureUp:
             logger.info("Up Event Detected")
-         elif __gesture== eGestureDown:
+         elif gesture== eGestureDown:
             logger.info("Down Event Detected")
-         elif __gesture == eGestureForward:
+         elif gesture == eGestureForward:
             logger.info("Forward Event Detected")
             if not __gestureHighRate:
                time.sleep(GES_QUIT_TIME)
             else:
                delay(GES_QUIT_TIME / 5)
-         elif __gesture == eGestureBackward:
+         elif gesture == eGestureBackward:
             logger.info("Backward Event Detected")
             if not __gestureHighRate:
                time.sleep(GES_QUIT_TIME)
             else:
                delay(GES_QUIT_TIME / 5)
-         elif __gesture == eGestureClockwise:
+         elif gesture == eGestureClockwise:
             logger.info("Clockwise Event Detected")
-         elif __gesture == eGestureAntiClockwise:
+         elif gesture == eGestureAntiClockwise:
             logger.info("anti-clockwise Event Detected")
          else:
-               tmp = __readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
+               tmp = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
                if tmp:
-                  __gesture = eGestureWave
+                  gesture = eGestureWave
                   logger.info("Wave2 Event Detected")
                else:
-                  if __gesture == eGestureWaveSlowlyLeftRight:
+                  if gesture == eGestureWaveSlowlyLeftRight:
                      logger.info("LeftRight Wave Event Detected")
-                  elif __gesture == eGestureWaveSlowlyUpDown:
+                  elif gesture == eGestureWaveSlowlyUpDown:
                      logger.info("UpDown Wave Event Detected")
-                  elif __gesture == eGestureWaveSlowlyForwardBackward:
+                  elif gesture == eGestureWaveSlowlyForwardBackward:
                      logger.info("ForwardBackward Wave Event Detected")
-                  elif __gesture == eGestureWaveSlowlyDisorder:
+                  elif gesture == eGestureWaveSlowlyDisorder:
                      logger.info("Wave Disorder Event Detected")
-      return __gesture
+      return gesture
    '''
       # @brief Switch Bank
       # @param bank  The bank you will switch to, eBank0 or eBank1
       # @return Return 0 if switching successfully, otherwise return non-zero. 
    '''
-   def __selectBank(data):
-      if data == eBank0 or data == eBank1:
-         __writeReg(PAJ7620_REGITER_BANK_SEL, data)
-
+   def _select_bank(self,data):
+      if data == self.eBank0 or data == self.eBank1:
+         self._write_reg(PAJ7620_REGITER_BANK_SEL, [data])
 
    '''
     #  @brief Set rate mode of the module, the API is disabled currently.
     #  @param mode The mode users can configure, eNormalRate or eGamingRate
     #  @return Return 0 if setting is successful, otherwise return non-zero. 
    '''
-   def __setNormalOrGamingMode_(self, mode):
+   def _set_normal_or_gaming_mode(self, mode):
       if mode == eNormalRate or mode == eGamingRate:
          return 0
 
@@ -482,10 +487,8 @@ class DFRobot_PAJ7620U2:
       # @param pBuf Storage cache of the data to be written into 
       # @param size Length of the data to be written into 
    '''
-   def __writeReg(self,reg,value):
+   def _write_reg(self,reg,value):
       self.i2cbus.write_i2c_block_data(self.i2c_addr, reg, value)
-
-
 
    '''
      #  @brief Read register function 
@@ -494,16 +497,5 @@ class DFRobot_PAJ7620U2:
      # @param size Length of the data to be read
      # @return Return the actually read length, fails to read if return 0.
    '''
-   def __readReg(self, reg):
+   def _read_reg(self, reg):
       return self.i2cbus.read_i2c_block_data(self.i2c_addr, reg)
-
-
-
-
-
-
-
-
-
-
-
