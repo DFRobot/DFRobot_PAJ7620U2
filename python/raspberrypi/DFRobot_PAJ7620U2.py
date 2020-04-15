@@ -401,37 +401,6 @@ class DFRobot_PAJ7620U2:
     # @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist,
     # @n return null string.
    '''
-   '''
-   def gesture_description(self,gesture):
-       if gesture == self.eGestureNone:
-           return "None"
-       elif gesture == self.eGestureRight:
-           return "Right"
-       elif gesture == self.eGestureLeft:
-           return "Left"
-       elif gesture == self.eGestureUp:
-           return "Up"
-       elif gesture == self.eGestureDown:
-           return "Down"
-       elif gesture == self.eGestureForward:
-           return "Forward"
-       elif gesture == self.eGestureBackward:
-           return "Backward"
-       elif gesture == self.eGestureClockwise:
-           return "Clockwise"
-       elif gesture == self.eGestureAntiClockwise:
-           return "Anti-Clockwise"
-       elif gesture == self.eGestureWave:
-           return "Wave"
-       elif gesture == self.eGestureWaveSlowlyDisorder:
-           return "WaveSlowlyDisorder"
-       elif gesture == self.eGestureWaveSlowlyLeftRight:
-           return "WaveSlowlyLeftRight"
-       elif gesture == self.eGestureWaveSlowlyUpDown:
-           return "WaveSlowlyUpDown"
-       elif gesture == self.eGestureWaveSlowlyForwardBackward:
-           return "WaveSlowlyForwardBackward"
-   '''
    def gesture_description(self,gesture):
       ges = str(gesture)
       return GESTURE.get(ges, "")
@@ -500,6 +469,7 @@ class DFRobot_PAJ7620U2:
                elif gesture == self.eGestureWaveSlowlyDisorder:
                   logger.info("Wave Disorder Event Detected")
       return gesture
+
    '''
       # @brief Switch Bank
       # @param bank  The bank you will switch to, eBank0 or eBank1
