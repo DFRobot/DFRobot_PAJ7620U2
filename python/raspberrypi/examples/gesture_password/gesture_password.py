@@ -49,7 +49,7 @@ def setup():
    # Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library.
    # If necessary, you can complete the algorithm logic in the ino file by yourself.
    '''
-  paj.setGestureHighRate(true);
+  paj.set_gesture_highrate(True);
 
 
 def loop():
@@ -58,13 +58,14 @@ def loop():
    # eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
    # eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
   '''
-  pdLen = len(password)
+  global index
+  pd_len = len(password)
   print("password length=%d"%pd_len);
-  start_timestamp = millis();
+  start_timestamp = time.time();
   print("please input the %d gesture"%(index+1))
   correct = False
   while(correct == False):
-    _now = now();
+    now = time.time();
     if(now - start_timestamp >= TIMEOUT):
         start_timestamp = now;
         index = 0;
@@ -78,18 +79,18 @@ def loop():
     print(paj.gesture_description(gesture));
     if(gesture == password[index]):
       index = index + 1
-      print("please input the %d gesture"%(index+1))
+      print("please input the %d gesture"%(index + 1))
     else:
-      start_timestamp = millis();
+      start_timestamp = time.time();
       index = 0;
       print("gesture password is incorrect, try again")
-      print("please input the %d gesture"(index+1));
+      print("please input the %d gesture"%(index + 1))
     
-    if(index == pdLen):
+    if(index == pd_len):
       correct = True
   
   print("Unlock all gestures successfully, you have entered the system")
-  print("To enter the gesture password, you have spent %d seconds"%((millis()-start_timestamp)/1000))
+  print("To enter the gesture password, you have spent %d seconds"%((time.time()-start_timestamp)/1000))
   
   #TO DO
   while True:

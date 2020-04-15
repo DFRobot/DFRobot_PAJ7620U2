@@ -21,6 +21,7 @@
 import sys
 import smbus
 import logging
+sys.path.append('../../')
 from ctypes import *
 import time
 import json
@@ -42,48 +43,48 @@ PAJ7620_PARTID = 0x7620
 PAJ7620_REGITER_BANK_SEL = 0xEF
 
 # REGISTER BANK 0
-PAJ7620_ADDR_PART_ID_LOW                 = 0x00	 # R
-PAJ7620_ADDR_PART_ID_HIGH                = 0x01	 # R
-PAJ7620_ADDR_VERSION_ID			         = 0x01	 # R
-PAJ7620_ADDR_SUSPEND_CMD		         = 0x03	 # W
-PAJ7620_ADDR_GES_PS_DET_MASK_0	         = 0x41	 # RW
-PAJ7620_ADDR_GES_PS_DET_MASK_1	         = 0x42	 # RW
-PAJ7620_ADDR_GES_PS_DET_FLAG_0	         = 0x43	 # R
-PAJ7620_ADDR_GES_PS_DET_FLAG_1	         = 0x44	 # R
-PAJ7620_ADDR_STATE_INDICATOR	         = 0x45	 # R
-PAJ7620_ADDR_PS_HIGH_THRESHOLD	         = 0x69	 # RW
-PAJ7620_ADDR_PS_LOW_THRESHOLD	         = 0x6A	 # RW
-PAJ7620_ADDR_PS_APPROACH_STATE	         = 0x6B	 # R
-PAJ7620_ADDR_PS_RAW_DATA		         = 0x6C	 # R
+PAJ7620_ADDR_PART_ID_LOW                 = 0x00  # R
+PAJ7620_ADDR_PART_ID_HIGH                = 0x01  # R
+PAJ7620_ADDR_VERSION_ID                  = 0x01  # R
+PAJ7620_ADDR_SUSPEND_CMD                 = 0x03  # W
+PAJ7620_ADDR_GES_PS_DET_MASK_0           = 0x41  # RW
+PAJ7620_ADDR_GES_PS_DET_MASK_1           = 0x42  # RW
+PAJ7620_ADDR_GES_PS_DET_FLAG_0           = 0x43  # R
+PAJ7620_ADDR_GES_PS_DET_FLAG_1           = 0x44  # R
+PAJ7620_ADDR_STATE_INDICATOR             = 0x45  # R
+PAJ7620_ADDR_PS_HIGH_THRESHOLD           = 0x69  # RW
+PAJ7620_ADDR_PS_LOW_THRESHOLD            = 0x6A  # RW
+PAJ7620_ADDR_PS_APPROACH_STATE           = 0x6B  # R
+PAJ7620_ADDR_PS_RAW_DATA                 = 0x6C  # R
 
 # REGISTER BANK 1
-PAJ7620_ADDR_PS_GAIN			         = 0x44	 # RW
-PAJ7620_ADDR_IDLE_S1_STEP_0		         = 0x67	 # RW
-PAJ7620_ADDR_IDLE_S1_STEP_1		         = 0x68	 # RW
-PAJ7620_ADDR_IDLE_S2_STEP_0		         = 0x69	 # RW
-PAJ7620_ADDR_IDLE_S2_STEP_1		         = 0x6A	 # RW
-PAJ7620_ADDR_OP_TO_S1_STEP_0	         = 0x6B	 # RW
-PAJ7620_ADDR_OP_TO_S1_STEP_1	         = 0x6C	 # RW
-PAJ7620_ADDR_OP_TO_S2_STEP_0	         = 0x6D  # RW
-PAJ7620_ADDR_OP_TO_S2_STEP_1	         = 0x6E	 # RW
-PAJ7620_ADDR_OPERATION_ENABLE	         = 0x72	 # RW
+PAJ7620_ADDR_PS_GAIN                     = 0x44  # RW
+PAJ7620_ADDR_IDLE_S1_STEP_0              = 0x67  # RW
+PAJ7620_ADDR_IDLE_S1_STEP_1              = 0x68  # RW
+PAJ7620_ADDR_IDLE_S2_STEP_0              = 0x69  # RW
+PAJ7620_ADDR_IDLE_S2_STEP_1              = 0x6A  # RW
+PAJ7620_ADDR_OP_TO_S1_STEP_0             = 0x6B  # RW
+PAJ7620_ADDR_OP_TO_S1_STEP_1             = 0x6C  # RW
+PAJ7620_ADDR_OP_TO_S2_STEP_0             = 0x6D  # RW
+PAJ7620_ADDR_OP_TO_S2_STEP_1             = 0x6E  # RW
+PAJ7620_ADDR_OPERATION_ENABLE            = 0x72  # RW
 
 PAJ7620_BANK0                            = 0
 PAJ7620_BANK1                            = 1
 
 # PAJ7620_ADDR_SUSPEND_CMD
 PAJ7620_I2C_WAKEUP                       = 0x01
-PAJ7620_I2C_SUSPEND	                     = 0x00
+PAJ7620_I2C_SUSPEND                      = 0x00
 
 # PAJ7620_ADDR_OPERATION_ENABLE
 PAJ7620_ENABLE                           = 0x01
 PAJ7620_DISABLE                          = 0x00
 
-GES_REACTION_TIME                        = 0.05	# You can adjust the reaction time according to the actual circumstance.
-GES_ENTRY_TIME                           = 2 	# When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s).
+GES_REACTION_TIME                        = 0.05 # You can adjust the reaction time according to the actual circumstance.
+GES_ENTRY_TIME                           = 2    # When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s).
 GES_QUIT_TIME                            = 1
 
-GESRTURE = json.loads('{\
+GESTURE = json.loads('{\
  "0": "None",\
  "1": "Right",\
  "2": "Left",\
@@ -125,6 +126,7 @@ class DFRobot_PAJ7620U2:
 
    eNormalRate = 0     # Gesture Update Rate is 120HZ, Gesture speed is 60°/s - 600°/s
    eGamingRate = 1     # Gesture Update Rate is 240HZ,Gesture speed is 60°/s - 1200°/s
+   _gestureHighRate = True
 
    _init_register_array = [
       [0xEF,0x00],
@@ -361,17 +363,16 @@ class DFRobot_PAJ7620U2:
       self._select_bank(self.eBank0)
       partid = self._read_reg(PAJ7620_ADDR_PART_ID_LOW)
       if partid == None:
-         logger.warning("bus data access error")
-         return ERR_DATA_BUS
-      logger.info("partid=%d" % (partid[0]))
-
-      if partid[0] != PAJ7620_PARTID:
-         return ERR_IC_VERSION;
-      
-      for i in  range(0,len(_init_register_array)):
-         self._write_reg(_init_register_array[i][0], [_init_register_array[i][1]])
-      self._select_bank(eBank0)
-      return ERR_OK
+        logger.warning("bus data access error")
+        return self.ERR_DATA_BUS
+      #logger.info("partid=%d" % (partid[1]<<8|partid[0]))
+      time.sleep(0.1)
+      if (partid[1]<<8|partid[0]) != PAJ7620_PARTID:
+        return self.ERR_IC_VERSION
+      for i in range(0,len(self._init_register_array)):
+        self._write_reg(self._init_register_array[i][0], [self._init_register_array[i][1]])
+      self._select_bank(self.eBank0)
+      return self.ERR_OK
 
    '''
    @brief Set gesture detection mode 
@@ -391,8 +392,8 @@ class DFRobot_PAJ7620U2:
    @n  clockwise, counter-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, 
    @n  wave slowly and randomly. 
    '''
-   def setGestureHighRate(self,v):
-      _gesture_highrate = v
+   def set_gesture_highrate(self,v):
+      self._gesture_highrate = v
 
    '''
     # @brief Get the string descritpion corresponding to the gesture number.
@@ -400,68 +401,104 @@ class DFRobot_PAJ7620U2:
     # @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist,
     # @n return null string.
    '''
+   '''
    def gesture_description(self,gesture):
-      return GESTURE.get(gesture, "")
+       if gesture == self.eGestureNone:
+           return "None"
+       elif gesture == self.eGestureRight:
+           return "Right"
+       elif gesture == self.eGestureLeft:
+           return "Left"
+       elif gesture == self.eGestureUp:
+           return "Up"
+       elif gesture == self.eGestureDown:
+           return "Down"
+       elif gesture == self.eGestureForward:
+           return "Forward"
+       elif gesture == self.eGestureBackward:
+           return "Backward"
+       elif gesture == self.eGestureClockwise:
+           return "Clockwise"
+       elif gesture == self.eGestureAntiClockwise:
+           return "Anti-Clockwise"
+       elif gesture == self.eGestureWave:
+           return "Wave"
+       elif gesture == self.eGestureWaveSlowlyDisorder:
+           return "WaveSlowlyDisorder"
+       elif gesture == self.eGestureWaveSlowlyLeftRight:
+           return "WaveSlowlyLeftRight"
+       elif gesture == self.eGestureWaveSlowlyUpDown:
+           return "WaveSlowlyUpDown"
+       elif gesture == self.eGestureWaveSlowlyForwardBackward:
+           return "WaveSlowlyForwardBackward"
+   '''
+   def gesture_description(self,gesture):
+      ges = str(gesture)
+      return GESTURE.get(ges, "")
+   
    '''
    # @brief Get gesture
    # @return Return gesture, could be any value except eGestureAll in eGesture_t.
    '''
    def get_gesture(self):
-      gesture = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
-      gesture = gesture << 8
-      if gesture == eGestureWave:
+      buf = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
+      gesture = buf[0] << 8
+      if gesture == self.eGestureWave:
          logger.info("Wave1 Event Detected")
          time.sleep(GES_QUIT_TIME)
       else :
-         gesture = eGestureNone
-         self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0) # Read Bank_0_Reg_0x43 / 0x44 for gesture result.
-         gesture = gesture & 0x00ff
-         if not _gestureHighRate:
+         gesture = self.eGestureNone
+         buf = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0) # Read Bank_0_Reg_0x43 / 0x44 for gesture result.
+         gesture = buf[0] & 0x00ff
+         if not self._gesture_highrate:
             time.sleep(GES_ENTRY_TIME)
-            tmp = _read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0)
-            logger.info("tmp=0x%#x"%tmp)
-            logger.info("__gesture=0x%#x" % __gesture)
-            gesture = _gesture|tmp
-         if gesture != eGestureNone:
-            logger.info("")
-         elif gesture == eGestureRight:
+            tmp = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_0)
+            #print(tmp)
+            #logger.info("tmp=%#x"%tmp[0])
+            #logger.info("gesture=%#x" % gesture)
+            time.sleep(0.2)
+            gesture = gesture|tmp[0]
+         if gesture != self.eGestureNone:
+            #logger.info("")
+            time.sleep(0.1)
+         elif gesture == self.eGestureRight:
             logger.info("Right Event Detected")
-         elif gesture == eGestureLeft:
-             logger.info("Left Event Detected")
-         elif gesture== eGestureUp:
+         elif gesture == self.eGestureLeft:
+            logger.info("Left Event Detected")
+         elif gesture== self.eGestureUp:
             logger.info("Up Event Detected")
-         elif gesture== eGestureDown:
+         elif gesture== self.eGestureDown:
             logger.info("Down Event Detected")
-         elif gesture == eGestureForward:
+         elif gesture == self.eGestureForward:
             logger.info("Forward Event Detected")
-            if not __gestureHighRate:
+            if not self._gesture_highrate:
                time.sleep(GES_QUIT_TIME)
             else:
-               delay(GES_QUIT_TIME / 5)
-         elif gesture == eGestureBackward:
+               time.sleep(GES_QUIT_TIME / 5)
+         elif gesture == self.eGestureBackward:
             logger.info("Backward Event Detected")
-            if not __gestureHighRate:
+            if not self._gestureHighRate:
                time.sleep(GES_QUIT_TIME)
             else:
-               delay(GES_QUIT_TIME / 5)
-         elif gesture == eGestureClockwise:
+               time.sleep(GES_QUIT_TIME / 5)
+         elif gesture == self.eGestureClockwise:
             logger.info("Clockwise Event Detected")
-         elif gesture == eGestureAntiClockwise:
+         elif gesture == self.eGestureAntiClockwise:
             logger.info("anti-clockwise Event Detected")
          else:
-               tmp = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
-               if tmp:
-                  gesture = eGestureWave
-                  logger.info("Wave2 Event Detected")
-               else:
-                  if gesture == eGestureWaveSlowlyLeftRight:
-                     logger.info("LeftRight Wave Event Detected")
-                  elif gesture == eGestureWaveSlowlyUpDown:
-                     logger.info("UpDown Wave Event Detected")
-                  elif gesture == eGestureWaveSlowlyForwardBackward:
-                     logger.info("ForwardBackward Wave Event Detected")
-                  elif gesture == eGestureWaveSlowlyDisorder:
-                     logger.info("Wave Disorder Event Detected")
+            tmp = self._read_reg(PAJ7620_ADDR_GES_PS_DET_FLAG_1)
+            if tmp[0]:
+               gesture = self.eGestureWave
+               logger.info("Wave2 Event Detected")
+            else:
+               if gesture == self.eGestureWaveSlowlyLeftRight:
+                  logger.info("LeftRight Wave Event Detected")
+               elif gesture == self.eGestureWaveSlowlyUpDown:
+                  logger.info("UpDown Wave Event Detected")
+               elif gesture == self.eGestureWaveSlowlyForwardBackward:
+                  logger.info("ForwardBackward Wave Event Detected")
+               elif gesture == self.eGestureWaveSlowlyDisorder:
+                  logger.info("Wave Disorder Event Detected")
       return gesture
    '''
       # @brief Switch Bank
@@ -499,3 +536,11 @@ class DFRobot_PAJ7620U2:
    '''
    def _read_reg(self, reg):
       return self.i2cbus.read_i2c_block_data(self.i2c_addr, reg)
+
+   def scan(self):
+      try:
+        self.i2cbus.read_byte(self.i2c_addr)
+        return True
+      except:
+        print("I2C init fail")
+        return False

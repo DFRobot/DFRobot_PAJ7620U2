@@ -27,11 +27,12 @@ int DFRobot_PAJ7620U2::begin(void)
     DBG("bus data access error");
     return ERR_DATA_BUS;
   }
+  Serial.println(partid);
   DBG("part id=0X");DBG(partid, HEX);
   if(partid != PAJ7620_PARTID){
     return ERR_IC_VERSION;
   }
-
+  //Serial.println("11111");
   for (int i = 0; i < sizeof(initRegisterArray)/sizeof(initRegisterArray[0]); i++) {
     writeReg(initRegisterArray[i][0], &initRegisterArray[i][1],1);
   }
@@ -76,7 +77,9 @@ DFRobot_PAJ7620U2::eGesture_t DFRobot_PAJ7620U2::getGesture(void)
       readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_0, &tmp, 1);
       DBG("tmp=0x");DBG(tmp,HEX);
       DBG("_gesture=0x");DBG(_gesture,HEX);
+      //Serial.println(_gesture);
       _gesture = (DFRobot_PAJ7620U2::eGesture_t)(((uint16_t)_gesture)|tmp);
+      //Serial.println(_gesture);
     }
     if (_gesture != eGestureNone){
       DBG("");
