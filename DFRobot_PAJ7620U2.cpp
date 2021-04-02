@@ -21,7 +21,7 @@ DFRobot_PAJ7620U2::DFRobot_PAJ7620U2(TwoWire * pWire)
 int DFRobot_PAJ7620U2::begin(void)
 {
   uint16_t partid;
-  Wire.begin();
+  _pWire->begin();
   selectBank(eBank0);
   if(readReg(PAJ7620_ADDR_PART_ID_LOW, &partid, 2) == 0){
     DBG("bus data access error");
