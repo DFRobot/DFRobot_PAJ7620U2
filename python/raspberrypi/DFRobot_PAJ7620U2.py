@@ -398,7 +398,7 @@ class DFRobot_PAJ7620U2:
    def set_gesture_highrate(self,v):
       '''!
         @brief Set gesture detection mode 
-        @param V true Set to fast detection mode, recognize gestures quickly and return. 
+        @param v true Set to fast detection mode, recognize gestures quickly and return. 
         @n  false Set to slow detection mode, system will do more judgements. 
         @n  In fast detection mode, the sensor can recognize 9 gestures: move left, right, up, down,
         @n  forward, backward, clockwise, counter-clockwise, wave. 
