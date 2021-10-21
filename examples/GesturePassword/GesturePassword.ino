@@ -5,11 +5,11 @@
  * @n The timeout period can be adjusted via macro TIMEOUT, unit(mm). 
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
- * @author      Alexander(ouki.wang@dfrobot.com)
+ * @license     The MIT License (MIT)
+ * @author      [Alexander](ouki.wang@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-16
- * @get from https://www.dfrobot.com
  * @url https://github.com/DFRobot/DFRobot_PAJ7620U2
  */
  

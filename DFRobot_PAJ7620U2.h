@@ -9,11 +9,11 @@
  * @n sensor solution.
  
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
- * @author      Alexander(ouki.wang@dfrobot.com)
+ * @license     The MIT License (MIT)
+ * @author      [Alexander](ouki.wang@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
- * @date  2019-07-16
- * @get from https://www.dfrobot.com
+ * @date  2021-10-20
  * @url https://github.com/DFRobot/DFRobot_PAJ7620U2
  */
 
@@ -37,35 +37,35 @@
 #define PAJ7620_PARTID  0x7620
 
 // REGISTER BANK SELECT
-#define PAJ7620_REGITER_BANK_SEL  (0xEF)	//W
+#define PAJ7620_REGITER_BANK_SEL  (0xEF)
 
 // REGISTER BANK 0
-#define PAJ7620_ADDR_PART_ID_LOW		0x00	//R
-#define PAJ7620_ADDR_PART_ID_HIGH		0x01	//R
-#define PAJ7620_ADDR_VERSION_ID			0x01	//R
-#define PAJ7620_ADDR_SUSPEND_CMD		0x03	//W
-#define PAJ7620_ADDR_GES_PS_DET_MASK_0	0x41	//RW
-#define PAJ7620_ADDR_GES_PS_DET_MASK_1	0x42	//RW
-#define PAJ7620_ADDR_GES_PS_DET_FLAG_0	0x43	//R
-#define PAJ7620_ADDR_GES_PS_DET_FLAG_1	0x44	//R
-#define PAJ7620_ADDR_STATE_INDICATOR	0x45	//R
-#define PAJ7620_ADDR_PS_HIGH_THRESHOLD	0x69	//RW
-#define PAJ7620_ADDR_PS_LOW_THRESHOLD	0x6A	//RW
-#define PAJ7620_ADDR_PS_APPROACH_STATE	0x6B	//R
-#define PAJ7620_ADDR_PS_RAW_DATA		0x6C	//R
+#define PAJ7620_ADDR_PART_ID_LOW         0x00
+#define PAJ7620_ADDR_PART_ID_HIGH        0x01
+#define PAJ7620_ADDR_VERSION_ID          0x01
+#define PAJ7620_ADDR_SUSPEND_CMD         0x03
+#define PAJ7620_ADDR_GES_PS_DET_MASK_0   0x41
+#define PAJ7620_ADDR_GES_PS_DET_MASK_1   0x42
+#define PAJ7620_ADDR_GES_PS_DET_FLAG_0   0x43
+#define PAJ7620_ADDR_GES_PS_DET_FLAG_1   0x44
+#define PAJ7620_ADDR_STATE_INDICATOR     0x45
+#define PAJ7620_ADDR_PS_HIGH_THRESHOLD   0x69
+#define PAJ7620_ADDR_PS_LOW_THRESHOLD    0x6A
+#define PAJ7620_ADDR_PS_APPROACH_STATE   0x6B
+#define PAJ7620_ADDR_PS_RAW_DATA         0x6C
 
 // REGISTER BANK 1
-#define PAJ7620_ADDR_PS_GAIN			0x44	//RW
-#define PAJ7620_ADDR_IDLE_S1_STEP_0		0x67	//RW
-#define PAJ7620_ADDR_IDLE_S1_STEP_1		0x68	//RW
-#define PAJ7620_ADDR_IDLE_S2_STEP_0		0x69	//RW
-#define PAJ7620_ADDR_IDLE_S2_STEP_1		0x6A	//RW
-#define PAJ7620_ADDR_OP_TO_S1_STEP_0	0x6B	//RW
-#define PAJ7620_ADDR_OP_TO_S1_STEP_1	0x6C	//RW
-#define PAJ7620_ADDR_OP_TO_S2_STEP_0	0x6D	//RW
-#define PAJ7620_ADDR_OP_TO_S2_STEP_1	0x6E	//RW
-#define PAJ7620_ADDR_OPERATION_ENABLE	0x72	//RW
-
+#define PAJ7620_ADDR_PS_GAIN             0x44
+#define PAJ7620_ADDR_IDLE_S1_STEP_0      0x67
+#define PAJ7620_ADDR_IDLE_S1_STEP_1      0x68
+#define PAJ7620_ADDR_IDLE_S2_STEP_0      0x69
+#define PAJ7620_ADDR_IDLE_S2_STEP_1      0x6A
+#define PAJ7620_ADDR_OP_TO_S1_STEP_0     0x6B
+#define PAJ7620_ADDR_OP_TO_S1_STEP_1     0x6C
+#define PAJ7620_ADDR_OP_TO_S2_STEP_0     0x6D
+#define PAJ7620_ADDR_OP_TO_S2_STEP_1     0x6E
+#define PAJ7620_ADDR_OPERATION_ENABLE    0x72
+< 
 #define PAJ7620_BANK0 0
 #define PAJ7620_BANK1 1
 
@@ -77,70 +77,81 @@
 #define PAJ7620_ENABLE	0x01
 #define PAJ7620_DISABLE	0x00
 
-#define GES_REACTION_TIME		50	// You can adjust the reaction time according to the actual circumstance.
-#define GES_ENTRY_TIME			2000	// When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s). 
-#define GES_QUIT_TIME			1000
+#define GES_REACTION_TIME  50    ///< You can adjust the reaction time according to the actual circumstance.
+#define GES_ENTRY_TIME     2000  ///< When you want to recognize the Forward/Backward gestures, your gestures' reaction time must less than GES_ENTRY_TIME(0.8s). 
+#define GES_QUIT_TIME      1000 
 
 class DFRobot_PAJ7620U2
 {
 public:
-  #define ERR_OK             0      //OK
-  #define ERR_DATA_BUS      -1      //Error in Data Bus 
-  #define ERR_IC_VERSION    -2      //IC version mismatch
-  
+  #define ERR_OK             0      ///< OK
+  #define ERR_DATA_BUS      -1      ///< Error in Data Bus 
+  #define ERR_IC_VERSION    -2      ///< IC version mismatch
+  /**
+   * @enum  eGesture_t
+   * @brief gesture information
+   */
   typedef enum{
-    eGestureNone = 0x00, /**< no gestures detected */
-    eGestureRight = 0x01<<0, /**< move from left to right */
-    eGestureLeft  = 0x01<<1, /**< move from right to left */
-    eGestureUp    = 0x01<<2, /**< move from down to up */
-    eGestureDown  = 0x01<<3, /**< move form up to down */
-    eGestureForward   = 0x01<<4, /**< starts far, move close to sensor */
-    eGestureBackward  = 0x01<<5, /**< starts near, move far to sensor */
-    eGestureClockwise = 0x01<<6, /**< clockwise */
-    eGestureAntiClockwise = 0x01<<7, /**< anti-clockwise */
-    eGestureWave = 0x01<<8, /**< wave quickly */
-    eGestureWaveSlowlyDisorder = 0x01<<9, /**< wave randomly and slowly */
-    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight, /**< slowly move left and right */
-    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown, /**< slowly move up and down */
+    eGestureNone = 0x00,                                                    /**< no gestures detected */
+    eGestureRight = 0x01<<0,                                                /**< move from left to right */
+    eGestureLeft  = 0x01<<1,                                                /**< move from right to left */
+    eGestureUp    = 0x01<<2,                                                /**< move from down to up */
+    eGestureDown  = 0x01<<3,                                                /**< move form up to down */
+    eGestureForward   = 0x01<<4,                                            /**< starts far, move close to sensor */
+    eGestureBackward  = 0x01<<5,                                            /**< starts near, move far to sensor */
+    eGestureClockwise = 0x01<<6,                                            /**< clockwise */
+    eGestureAntiClockwise = 0x01<<7,                                        /**< anti-clockwise */
+    eGestureWave = 0x01<<8,                                                 /**< wave quickly */
+    eGestureWaveSlowlyDisorder = 0x01<<9,                                   /**< wave randomly and slowly */
+    eGestureWaveSlowlyLeftRight = eGestureLeft + eGestureRight,             /**< slowly move left and right */
+    eGestureWaveSlowlyUpDown = eGestureUp + eGestureDown,                   /**< slowly move up and down */
     eGestureWaveSlowlyForwardBackward = eGestureForward + eGestureBackward, /**< slowly move forward and backward */
-    eGestureAll = 0xff /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
+    eGestureAll = 0xff                                                      /**< support all gestures, no practical meaning, only suitable for writing abstract program logic. */
   }eGesture_t;
-  
+  /**
+   * @enum  eBank_t
+   * @brief Register Bank
+   */
   typedef enum {
-    /**< some registers are located in Bank0*/ 
-    eBank0 = 0,
-    /**< some registers are located in Bank1*/
-    eBank1 = 1,
+    eBank0 = 0, /**< some registers are located in Bank0*/ 
+    eBank1 = 1, /**< some registers are located in Bank1*/
   }eBank_t;
-  
+
+  /**
+   * @enum  eRateMode_t
+   * @brief Gesture Update Rate
+   */
   typedef enum {
-    /**< Gesture Update Rate is 120HZ, Gesture speed is 60°/s - 600°/s*/
-    eNormalRate = 0,
-    /**< Gesture Update Rate is 240HZ,Gesture speed is 60°/s - 1200°/s*/
-    eGamingRate = 1,
+    eNormalRate = 0, /**< Gesture Update Rate is 120HZ, Gesture speed is 60°/s - 600°/s*/
+    eGamingRate = 1, /**< Gesture Update Rate is 240HZ,Gesture speed is 60°/s - 1200°/s*/
   }eRateMode_t;
 
+  /**
+   * @struct  sGestureDescription_t
+   * @brief Gesture Description
+   */
   typedef struct{
-    /**< Gesture enumeration variable X */
-    eGesture_t gesture;
-    /**< Description about the gesture enumeration variable X */
-    const char * description;
+    eGesture_t gesture;       /**< Gesture enumeration variable X */
+    const char * description; /**< Description about the gesture enumeration variable X */
   }sGestureDescription_t;
 
 public:
   /**
+   * @fn DFRobot_PAJ7620U2
    * @brief Constuctor
-   * @param mode Call the function and designate the device's default working mode. 
+   * @param pWire TwoWire
    */
   DFRobot_PAJ7620U2(TwoWire *pWire=&Wire);
 
   /**
+   * @fn DFRobot_PAJ7620U2
    * @brief init function
    * @return return 0 if initialization succeeds, otherwise return non-zero. 
    */
   int begin(void);
 
   /**
+   * @fn setGestureHighRate
    * @brief Set gesture detection mode 
    * @param b true Set to fast detection mode, recognize gestures quickly and return. 
    * @n  false Set to slow detection mode, system will do more judgements. 
@@ -161,13 +172,16 @@ public:
   void setGestureHighRate(bool b);
 
   /**
+   * @fn gestureDescription
    * @brief Get the string descritpion corresponding to the gesture number.
    * @param gesture Gesture number inlcuded in the eGesture_t
    * @return Textual description corresponding to the gesture number:if the gesture input in the gesture table doesn't exist, 
    * @n return null string.
    */
   String gestureDescription(eGesture_t gesture);
+
   /**
+   * @fn getGesture
    * @brief Get gesture
    * @return Return gesture, could be any value except eGestureAll in eGesture_t.
    */
@@ -175,6 +189,7 @@ public:
 
 private:
   /**
+   * @fn selectBank
    * @brief Switch Bank
    * @param bank  The bank you will switch to, eBank0 or eBank1
    * @return Return 0 if switching successfully, otherwise return non-zero. 
@@ -182,6 +197,7 @@ private:
   int selectBank(eBank_t bank);
 
   /**
+   * @fn setNormalOrGamingMode
    * @brief Set rate mode of the module, the API is disabled currently.
    * @param mode The mode users can configure, eNormalRate or eGamingRate
    * @return Return 0 if setting is successful, otherwise return non-zero. 
@@ -189,6 +205,7 @@ private:
   int setNormalOrGamingMode(eRateMode_t mode);
   
   /**
+   * @fn writeReg
    * @brief Write register function 
    * @param reg  register address 8bits
    * @param pBuf Storage cache of the data to be written into 
@@ -197,6 +214,7 @@ private:
   void writeReg(uint8_t reg, const void* pBuf, size_t size);
 
   /**
+   * @fn readReg
    * @brief Read register function 
    * @param reg  register address 8bits
    * @param pBuf Storage cache of the data to be read

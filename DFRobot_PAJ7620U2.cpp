@@ -3,8 +3,9 @@
  * @brief Define the basic structure of DFRobot_Sensor Class
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author      Alexander(ouki.wang@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-15
  * @get from https://www.dfrobot.com
@@ -21,7 +22,7 @@ DFRobot_PAJ7620U2::DFRobot_PAJ7620U2(TwoWire * pWire)
 int DFRobot_PAJ7620U2::begin(void)
 {
   uint16_t partid;
-  Wire.begin();
+  _pWire->begin();
   selectBank(eBank0);
   if(readReg(PAJ7620_ADDR_PART_ID_LOW, &partid, 2) == 0){
     DBG("bus data access error");
@@ -32,7 +33,6 @@ int DFRobot_PAJ7620U2::begin(void)
   if(partid != PAJ7620_PARTID){
     return ERR_IC_VERSION;
   }
-  //Serial.println("11111");
   for (int i = 0; i < sizeof(initRegisterArray)/sizeof(initRegisterArray[0]); i++) {
     writeReg(initRegisterArray[i][0], &initRegisterArray[i][1],1);
   }
@@ -77,9 +77,7 @@ DFRobot_PAJ7620U2::eGesture_t DFRobot_PAJ7620U2::getGesture(void)
       readReg(PAJ7620_ADDR_GES_PS_DET_FLAG_0, &tmp, 1);
       DBG("tmp=0x");DBG(tmp,HEX);
       DBG("_gesture=0x");DBG(_gesture,HEX);
-      //Serial.println(_gesture);
       _gesture = (DFRobot_PAJ7620U2::eGesture_t)(((uint16_t)_gesture)|tmp);
-      //Serial.println(_gesture);
     }
     if (_gesture != eGestureNone){
       DBG("");

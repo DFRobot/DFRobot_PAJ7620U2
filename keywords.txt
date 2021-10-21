@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For DFRobot_Sensor
+# Syntax Coloring Map For DFRobot_PAJ7620
 #######################################
 
 #######################################

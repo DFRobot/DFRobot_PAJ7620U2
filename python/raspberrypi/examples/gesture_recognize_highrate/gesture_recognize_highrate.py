@@ -1,19 +1,17 @@
 #-*- coding: utf-8 -*-
-'''
+'''!
   @file GestureRecognize_HighRate.ino
   @brief Present the 9 built-in gestures data the sensor supports. 
   @n Wave your hand above the sensor (within 0~20cm), it can recognize 9 kinds of gestures: move up, down, left, right, forward,
   @n backward, clockwise, anti-clockwise, wave.
   @n For more usages of the sensor, refer to the description about setGestureHighRate in function setup.
-  
   @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @licence     The MIT License (MIT)
   @author      Alexander(ouki.wang@dfrobot.com)
+  @maintainer  [fary](feng.yang@dfrobot.com)
   @version  V1.0
   @date  2019-07-16
-  @get from https://www.dfrobot.com
   @url https://github.com/DFRobot/DFRobot_PAJ7620U2
-
 '''
 import sys
 sys.path.append('../../')
@@ -49,12 +47,12 @@ def main():
   while True:
     '''
     Read gesture number（return eGesture_t enumerated type）
-    eGestureNone  eGestureRight  eGestureLeft  eGestureUp  eGestureDown  eGestureForward
-    eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
-    eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
+    GESTURE_NONE  GESTURE_RIGHT  GESTURE_LEFT  GESTURE_UP  GESTURE_DOWN  GESTURE_FORWARD
+    GESTURE_BACKWARD  GESTURE_CLOCKWISE  GESTURE_ANTI_CLOCKWISE  GESTURE_WAVE  GESTURE_WAVE_SLOWLY_DISORDER
+    GESTURE_WAVE_SLOWLY_LEFT_RIGHT  GESTURE_WAVE_SLOWLY_UP_DOWN  GESTURE_WAVE_SLOWLY_FORWARD_BACKWARD
     '''
     gesture = paj.get_gesture()
-    if gesture != paj.eGestureNone:
+    if gesture != paj.GESTURE_NONE:
       '''
       Get the string descritpion corresponding to the gesture number.
       The string description could be 
@@ -62,7 +60,7 @@ def main():
       "WaveSlowlyDisorder", "WaveSlowlyLeftRight", "WaveSlowlyUpDown", "WaveSlowlyForwardBackward"
       '''
       description  = paj.gesture_description(gesture);#Convert gesture number into string description
-      print("--------------Gesture Recognition System---------------------------");
+      print("--------------Gesture Recognition System---------------------------")
       print("gesture code        = %d"%(gesture))
       print("gesture description  = "+description)
 

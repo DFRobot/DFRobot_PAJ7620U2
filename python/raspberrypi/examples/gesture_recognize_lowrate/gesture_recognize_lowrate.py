@@ -1,20 +1,20 @@
 #-*- coding: utf-8 -*-
+'''!
+  @file GestureRecognize_LowRate.ino
+  @brief Present the 9 built-in gestures the sensor supports and 4 extended gestures in the slow mode.
+  @n Wave you hand above the sensor(within 0~20cm), it can detect: move left, right, up, down, forward, backward, clockwise, 
+  @n anti-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, wave randomly and slowly.
+  @n For more usages of the sensor, refer to the description about setGestureLowRate in function setup.
+  @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @licence     The MIT License (MIT)
+  @author      Alexander(ouki.wang@dfrobot.com)
+  @maintainer  [fary](feng.yang@dfrobot.com)
+  @version  V1.0
+  @date  2019-07-16
+  @get from https://www.dfrobot.com
+  @url https://github.com/DFRobot/DFRobot_PAJ7620U2
 '''
- @file GestureRecognize_LowRate.ino
- @brief Present the 9 built-in gestures the sensor supports and 4 extended gestures in the slow mode.  
- @n Wave you hand above the sensor(within 0~20cm), it can detect: move left, right, up, down, forward, backward, clockwise, 
- @n anti-clockwise, wave, slowly move left and right, slowly move up and down, slowly move forward and backward, wave randomly and slowly.
- @n For more usages of the sensor, refer to the description about setGestureLowRate in function setup.  
- 
- @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- @licence     The MIT License (MIT)
- @author      Alexander(ouki.wang@dfrobot.com)
- @version  V1.0
- @date  2019-07-16
- @get from https://www.dfrobot.com
- @url https://github.com/DFRobot/DFRobot_PAJ7620U2
-'''
- 
+
 import sys
 sys.path.append('../../')
 import time
@@ -42,18 +42,18 @@ print("PAJ7620U2 init finished, start to test the gesture recognition function."
  # Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library.
  # If necessary, you can complete the algorithm logic in the ino file by yourself.
  '''
-paj.set_gesture_highrate(False);
+paj.set_gesture_highrate(False)
 
 def main():
   while True:
     '''
     Read gesture number（return eGesture_t enumerated type）
-    eGestureNone  eGestureRight  eGestureLeft  eGestureUp  eGestureDown  eGestureForward
-    eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
-    eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
+    GESTURE_NONE  GESTURE_RIGHT  GESTURE_LEFT  GESTURE_UP  GESTURE_DOWN  GESTURE_FORWARD
+    GESTURE_BACKWARD  GESTURE_CLOCKWISE  GESTURE_ANTI_CLOCKWISE  GESTURE_WAVE  GESTURE_WAVE_SLOWLY_DISORDER
+    GESTURE_WAVE_SLOWLY_LEFT_RIGHT  GESTURE_WAVE_SLOWLY_UP_DOWN  GESTURE_WAVE_SLOWLY_FORWARD_BACKWARD
     '''
     gesture = paj.get_gesture()
-    if gesture != paj.eGestureNone:
+    if gesture != paj.GESTURE_NONE:
       '''
       Get the string descritpion corresponding to the gesture number.
       The string description could be 
@@ -61,7 +61,7 @@ def main():
       "WaveSlowlyDisorder", "WaveSlowlyLeftRight", "WaveSlowlyUpDown", "WaveSlowlyForwardBackward"
       '''
       description  = paj.gesture_description(gesture);#Convert gesture number into string description
-      print("--------------Gesture Recognition System---------------------------");
+      print("--------------Gesture Recognition System---------------------------")
       print("gesture code        = %d"%(gesture))
       print("gesture description  = "+ description)
 

@@ -1,16 +1,15 @@
 #-*- coding: utf-8 -*-
-'''
+'''!
   @file GesturePassword.py
   @brief Write algorithms in fast mode to realize gesture password. 
   @n Input gesture password in 20sm, if correct, enter the system, otherwise, continue to wait for users to input password.
   @n The timeout period can be adjusted via macro TIMEOUT, unit(mm). 
- 
   @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @licence     The MIT License (MIT)
   @author      Alexander(ouki.wang@dfrobot.com)
+  @maintainer  [fary](feng.yang@dfrobot.com)
   @version  V1.0
   @date  2019-07-16
-  @get from https://www.dfrobot.com
   @url https://github.com/DFRobot/DFRobot_PAJ7620U2
 '''
 
@@ -22,7 +21,7 @@ from DFRobot_PAJ7620U2 import *
 paj = DFRobot_PAJ7620U2(1)
 
 #Input the correct gestures within TIMEOUT period (mm):up up down down left left right right
-password = [paj.eGestureUp,paj.eGestureUp,paj.eGestureDown,paj.eGestureDown,paj.eGestureLeft,paj.eGestureLeft,paj.eGestureRight,paj.eGestureRight]
+password = [paj.GESTURE_UP,paj.GESTURE_UP,paj.GESTURE_DOWN,paj.GESTURE_DOWN,paj.GESTURE_LEFT,paj.GESTURE_LEFT,paj.GESTURE_RIGHT,paj.GESTURE_RIGHT]
 
 index = 0        #The number of the correctly input password 
 correct = False  #Whether the input password is correct 
@@ -49,40 +48,40 @@ def setup():
    # Since users only use limited gestures in this mode, we are not going to integrate too much expanded gestures in the library.
    # If necessary, you can complete the algorithm logic in the ino file by yourself.
    '''
-  paj.set_gesture_highrate(True);
+  paj.set_gesture_highrate(True)
 
 
 def loop():
   '''Read gesture number (return Gesture type)
-   # eGestureNone  eGestureRight  eGestureLeft  eGestureUp  eGestureDown  eGestureForward
-   # eGestureBackward  eGestureClockwise  eGestureAntiClockwise  eGestureWave  eGestureWaveSlowlyDisorder
-   # eGestureWaveSlowlyLeftRight  eGestureWaveSlowlyUpDown  eGestureWaveSlowlyForwardBackward
+   # GESTURE_NONE  GESTURE_RIGHT  GESTURE_LEFT  GESTURE_UP  GESTURE_DOWN  GESTURE_FORWARD
+   # GESTURE_BACKWARD  GESTURE_CLOCKWISE  GESTURE_ANTI_CLOCKWISE  GESTURE_WAVE  GESTURE_WAVE_SLOWLY_DISORDER
+   # GESTURE_WAVE_SLOWLY_LEFT_RIGHT  GESTURE_WAVE_SLOWLY_UP_DOWN  GESTURE_WAVE_SLOWLY_FORWARD_BACKWARD
   '''
   global index
   pd_len = len(password)
-  print("password length=%d"%pd_len);
-  start_timestamp = time.time();
+  print("password length=%d"%pd_len)
+  start_timestamp = time.time()
   print("please input the %d gesture"%(index+1))
   correct = False
   while(correct == False):
-    now = time.time();
+    now = time.time()
     if(now - start_timestamp >= TIMEOUT):
-        start_timestamp = now;
-        index = 0;
+        start_timestamp = now
+        index = 0
         print("timeout，input again")
         print("please input the %d gesture"(index+1))
 
-    gesture = paj.get_gesture();
-    if(gesture == paj.eGestureNone):
-      continue;
+    gesture = paj.get_gesture()
+    if(gesture == paj.GESTURE_NONE):
+      continue
     
-    print(paj.gesture_description(gesture));
+    print(paj.gesture_description(gesture))
     if(gesture == password[index]):
       index = index + 1
       print("please input the %d gesture"%(index + 1))
     else:
-      start_timestamp = time.time();
-      index = 0;
+      start_timestamp = time.time()
+      index = 0
       print("gesture password is incorrect, try again")
       print("please input the %d gesture"%(index + 1))
     
