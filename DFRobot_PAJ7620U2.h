@@ -65,7 +65,7 @@
 #define PAJ7620_ADDR_OP_TO_S2_STEP_0     0x6D
 #define PAJ7620_ADDR_OP_TO_S2_STEP_1     0x6E
 #define PAJ7620_ADDR_OPERATION_ENABLE    0x72
-< 
+
 #define PAJ7620_BANK0 0
 #define PAJ7620_BANK1 1
 
@@ -144,7 +144,7 @@ public:
   DFRobot_PAJ7620U2(TwoWire *pWire=&Wire);
 
   /**
-   * @fn DFRobot_PAJ7620U2
+   * @fn begin
    * @brief init function
    * @return return 0 if initialization succeeds, otherwise return non-zero. 
    */
