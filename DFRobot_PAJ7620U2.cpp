@@ -33,7 +33,7 @@ int DFRobot_PAJ7620U2::begin(void)
   if(partid != PAJ7620_PARTID){
     return ERR_IC_VERSION;
   }
-  for (int i = 0; i < sizeof(initRegisterArray)/sizeof(initRegisterArray[0]); i++) {
+  for (uint16_t i = 0; i < sizeof(initRegisterArray)/sizeof(initRegisterArray[0]); i++) {
     writeReg(initRegisterArray[i][0], &initRegisterArray[i][1],1);
   }
   selectBank(eBank0);
@@ -42,12 +42,13 @@ int DFRobot_PAJ7620U2::begin(void)
 
 int DFRobot_PAJ7620U2::setNormalOrGamingMode(eRateMode_t mode)
 {
+    mode = mode;
     return 0;
 }
 
 String DFRobot_PAJ7620U2::gestureDescription(eGesture_t gesture)
 {
-    for(int i=0;i<sizeof(gestureDescriptionsTable)/sizeof(gestureDescriptionsTable[0]);i++){
+    for(uint16_t i=0;i<sizeof(gestureDescriptionsTable)/sizeof(gestureDescriptionsTable[0]);i++){
         if(gesture == gestureDescriptionsTable[i].gesture){
           return gestureDescriptionsTable[i].description;
         }
@@ -158,6 +159,7 @@ DFRobot_PAJ7620U2::eGesture_t DFRobot_PAJ7620U2::getGesture(void)
 int DFRobot_PAJ7620U2::selectBank(eBank_t bank)
 {
   writeReg(PAJ7620_REGITER_BANK_SEL, &bank, 1);
+  return 0;
 }
 
 void DFRobot_PAJ7620U2::writeReg(uint8_t reg, const void* pBuf, size_t size)
