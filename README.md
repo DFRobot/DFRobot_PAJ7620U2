@@ -10,7 +10,7 @@ The PAJ7620 integrates gesture recognition function with general I2C interface i
 <img src="./resources/images/SEN0315.png">
 <br>
 
-## Product Link（https://www.dfrobot.com/product-2003.html）
+## Product Link（[https://www.dfrobot.com/product-2003.html](https://www.dfrobot.com/product-2003.html)）
     SKU：SEN0315
    
 ## Table of Contents
